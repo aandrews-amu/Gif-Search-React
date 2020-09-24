@@ -1,3 +1,6 @@
+/* TODO
+- wrong order of elements when it goes to 2x2 in media query
+ */
 .container {
     display: flex;
     flex-wrap: wrap;
