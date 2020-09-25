@@ -31,7 +31,7 @@
 }
 
 @media screen and (max-width: 768px){
-    /* Here it's no longer a checker board... is that wrong? */
+
     .purple, .white {
         margin: 30px;
         height: 200px;
@@ -40,7 +40,6 @@
     .item {  
         flex: 0 0 50%;
     }
-
 }
 
 
