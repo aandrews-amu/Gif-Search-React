@@ -17,23 +17,10 @@
   border: 2px solid #4e008e;
 }
 
-/* See comments in html
-.side-bar {
-  margin-top: 10px;
-  color: #4e008e;
-  border: 2px solid #4e008e;
-  height: 100px;
-} */
-
 .row--sidebar {
   margin-top: 30px;
   color: #4e008e;
   border: 2px solid #4e008e;
-  /* height: 100px; */
-  /* I would recommend using height sparingly,
-  generally children elements can dictate the
-  height of their parent on their own. But there are
-  definitely cases when you need it. */
 }
 
 @media screen and (min-width: 768px) {
