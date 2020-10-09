@@ -1,11 +1,18 @@
 @import "~bootstrap/scss/bootstrap";
 $main-color: #4e008e;
 
-.container {
-  margin: 20px auto;
+.page-container {
+  @include make-container();
+  @include make-container-max-widths();
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.grid {
+.page {
+  @include make-row();
+}
+
+.page__content {
   @include make-col-ready();
   @include make-col(12);
   order: 2;
@@ -15,15 +22,45 @@ $main-color: #4e008e;
   }
 }
 
-.square { 
+.page__sidebar {
   @include make-col-ready();
   @include make-col(12);
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
+    order: 2;
+    @include make-col(3);
+  }
+}
+
+.boxes {
+  @include make-row();
+  &--even {
+    @include media-breakpoint-only(md) {
+      flex-direction: row-reverse;
+    }
+    @include media-breakpoint-down(sm) {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+.boxes__box {
+  @include make-col-ready();
+  @include make-col(12);
+  @include media-breakpoint-only(md) {
     @include make-col(6);
+    &:nth-child(3) {
+      order: 3;
+    }
   }
   @include media-breakpoint-up(lg) {
     @include make-col(3);
   }
+}
+
+.square {
+  height: 200px;
+  box-sizing: border-box;
+  margin-top: 30px;
 }
 
 .square--purple {
@@ -34,108 +71,16 @@ $main-color: #4e008e;
   border: 2px solid $main-color;
 }
 
-.square--white, .square--purple {
-  height: 200px;
-  box-sizing: border-box;
+.gifs {
+  @include make-row();
   margin-top: 30px;
-}
-
-.square--order1 {
-  @include media-breakpoint-up(md) {
-    order: 1;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 1;
-  }
-}
-
-.square--order2 {
-  @include media-breakpoint-up(md) {
-    order: 2;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 2;
-  }
-}
-
-.square--order3 {
-  @include media-breakpoint-up(md) {
-    order: 4;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 3;
-  }
-}
-
-.square--order4 {
-  @include media-breakpoint-up(md) {
-    order: 3;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 4;
-  }
-}
-
-.square--order5 {
-  order: 2;
-  @include media-breakpoint-up(md) {
-    order: 2;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 1;
-  }
-}
-
-.square--order6 {
-  order: 1;
-  @include media-breakpoint-up(md) {
-    order: 1;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 2;
-  }
-}
-
-.square--order7 {
-  order: 4;
-  @include media-breakpoint-up(md) {
-    order: 3;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 3;
-  }
-}
-
-.square--order8 {
-  order: 3;
-  @include media-breakpoint-up(md) {
-    order: 4;
-  }
-  @include media-breakpoint-up(lg) {
-    order: 4;
-  }
-}
-
-
-.sidebar {
-  @include make-col-ready();
-  @include make-col(12);
-  height: 200px;
-  order: 1;
-  margin-top: 30px;
-  color: $main-color;
   border: 2px solid $main-color;
-  @include media-breakpoint-up(lg) {
-    height: 250px;
-    order: 2;
-    @include make-col(3);
-  }
 }
 
-.sidebar__gif {
+.gifs__gif {
   @include make-col-ready();
-  @include make-col(12);
+  @include make-col(6);
   @include media-breakpoint-up(lg) {
-    @include make-col(6);
+    @include make-col(12);
   }
 }
