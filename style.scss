@@ -65,10 +65,17 @@ $main-color: #4e008e;
 
 .square--purple {
   background-color: $main-color;
+  &:hover {
+    border: 5px solid blue;
+  }
 }
 
 .square--white {
   border: 2px solid $main-color;
+}
+
+.square--blue {
+  border: 5px solid blue;
 }
 
 .gifs {
@@ -83,4 +90,9 @@ $main-color: #4e008e;
   @include media-breakpoint-up(lg) {
     @include make-col(12);
   }
+}
+
+.round {
+  border-radius: 50%;
+  transform: rotate(20deg);
 }

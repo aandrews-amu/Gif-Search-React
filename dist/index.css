@@ -10013,9 +10013,16 @@ h3 {
 .square--purple {
   background-color: #4e008e;
 }
+.square--purple:hover {
+  border: 5px solid blue;
+}
 
 .square--white {
   border: 2px solid #4e008e;
+}
+
+.square--blue {
+  border: 5px solid blue;
 }
 
 .gifs {
@@ -10040,6 +10047,11 @@ h3 {
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
+
+.round {
+  border-radius: 50%;
+  transform: rotate(20deg);
 }
 
 /*# sourceMappingURL=/index.css.map */
