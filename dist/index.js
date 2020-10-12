@@ -190,7 +190,34 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
-// ------------- QUERY SELECTORS ---------------
+var colCount = 4;
+
+function buildRow(childCount) {
+  var newDiv = document.createElement("div");
+  newDiv.classList.add("boxes");
+
+  for (var i = 0; i < childCount; i++) {
+    var newCol = document.createElement("div");
+    newCol.classList.add("boxes__box");
+    var newSq = document.createElement("div");
+    newSq.classList.add("square");
+    newCol.appendChild(newSq);
+    newDiv.appendChild(newCol);
+  }
+
+  return newDiv;
+}
+
+function addRow(rowCount) {
+  var myParent = document.querySelector("#content");
+
+  for (var i = 0; i < rowCount; i++) {
+    var myRow = buildRow(colCount);
+    myParent.insertAdjacentElement("beforeend", myRow);
+  }
+}
+
+addRow(3); // ------------- QUERY SELECTORS ---------------
 // QUERY SELECTORS ARE THE BETTER WAY TO SELECT ELEMENTS
 // YOU NEED TO INCLUDE "." FOR CLASS and "#" FOR ID IN THE SELECTION
 // GET FIRST INSTANCE OF CLASS SQUARE

@@ -33,14 +33,6 @@ $main-color: #4e008e;
 
 .boxes {
   @include make-row();
-  &--even {
-    @include media-breakpoint-only(md) {
-      flex-direction: row-reverse;
-    }
-    @include media-breakpoint-down(sm) {
-      flex-direction: column-reverse;
-    }
-  }
 }
 
 .boxes__box {
@@ -48,9 +40,6 @@ $main-color: #4e008e;
   @include make-col(12);
   @include media-breakpoint-only(md) {
     @include make-col(6);
-    &:nth-child(3) {
-      order: 3;
-    }
   }
   @include media-breakpoint-up(lg) {
     @include make-col(3);
@@ -61,21 +50,10 @@ $main-color: #4e008e;
   height: 200px;
   box-sizing: border-box;
   margin-top: 30px;
-}
-
-.square--purple {
   background-color: $main-color;
   &:hover {
-    border: 5px solid blue;
+    border: 5px solid white;
   }
-}
-
-.square--white {
-  border: 2px solid $main-color;
-}
-
-.square--blue {
-  border: 5px solid blue;
 }
 
 .gifs {
@@ -92,7 +70,7 @@ $main-color: #4e008e;
   }
 }
 
-.round {
-  border-radius: 50%;
-  transform: rotate(20deg);
-}
+// .round {
+//   border-radius: 50%;
+//   transform: rotate(20deg);
+// }
