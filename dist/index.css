@@ -9969,16 +9969,6 @@ h3 {
   margin-right: -15px;
   margin-left: -15px;
 }
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .boxes--even {
-    flex-direction: row-reverse;
-  }
-}
-@media (max-width: 767.98px) {
-  .boxes--even {
-    flex-direction: column-reverse;
-  }
-}
 
 .boxes__box {
   position: relative;
@@ -9993,9 +9983,6 @@ h3 {
     flex: 0 0 50%;
     max-width: 50%;
   }
-  .boxes__box:nth-child(3) {
-    order: 3;
-  }
 }
 @media (min-width: 992px) {
   .boxes__box {
@@ -10008,14 +9995,11 @@ h3 {
   height: 200px;
   box-sizing: border-box;
   margin-top: 30px;
-}
-
-.square--purple {
   background-color: #4e008e;
 }
-
-.square--white {
-  border: 2px solid #4e008e;
+.square:hover {
+  border: 5px solid #4e008e;
+  background-color: white;
 }
 
 .gifs {

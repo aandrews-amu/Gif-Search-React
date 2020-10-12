@@ -33,14 +33,6 @@ $main-color: #4e008e;
 
 .boxes {
   @include make-row();
-  &--even {
-    @include media-breakpoint-only(md) {
-      flex-direction: row-reverse;
-    }
-    @include media-breakpoint-down(sm) {
-      flex-direction: column-reverse;
-    }
-  }
 }
 
 .boxes__box {
@@ -48,9 +40,6 @@ $main-color: #4e008e;
   @include make-col(12);
   @include media-breakpoint-only(md) {
     @include make-col(6);
-    &:nth-child(3) {
-      order: 3;
-    }
   }
   @include media-breakpoint-up(lg) {
     @include make-col(3);
@@ -61,14 +50,11 @@ $main-color: #4e008e;
   height: 200px;
   box-sizing: border-box;
   margin-top: 30px;
-}
-
-.square--purple {
   background-color: $main-color;
-}
-
-.square--white {
-  border: 2px solid $main-color;
+  &:hover {
+    border: 5px solid $main-color;
+    background-color: white; 
+  }
 }
 
 .gifs {
