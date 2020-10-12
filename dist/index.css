@@ -9998,7 +9998,8 @@ h3 {
   background-color: #4e008e;
 }
 .square:hover {
-  border: 5px solid white;
+  border: 5px solid #4e008e;
+  background-color: white;
 }
 
 .gifs {
