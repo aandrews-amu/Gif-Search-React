@@ -1,12 +1,11 @@
 const colCount = 4;
 
-const myAddButton = document.querySelector(".myaddbutton");
+const myAddButton = document.querySelector("#myaddbutton");
 myAddButton.onclick = function () {
-  console.log("CLICKED");
   addRow(1);
 }
 
-const myRemoveButton = document.querySelector(".myrmbutton");
+const myRemoveButton = document.querySelector("#myrmbutton");
 myRemoveButton.onclick = function () {
   removeRow();
 }
@@ -34,9 +33,7 @@ function addRow(rowCount) {
 }
 
 function removeRow() {
-  const myParent = document.querySelector("#content");
   const numRows = document.querySelectorAll(".boxes").length;
-  console.log(numRows);
   if (numRows > 0) {
     const firstRow = document.querySelector(".boxes");
     firstRow.remove();

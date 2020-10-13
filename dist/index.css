@@ -10002,7 +10002,7 @@ h3 {
   background-color: white;
 }
 
-.myaddbutton, .myrmbutton {
+#myaddbutton, #myrmbutton {
   margin-top: 30px;
 }
 
