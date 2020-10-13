@@ -10002,6 +10002,10 @@ h3 {
   background-color: white;
 }
 
+.mybutton {
+  margin-top: 30px;
+}
+
 .gifs {
   display: flex;
   flex-wrap: wrap;

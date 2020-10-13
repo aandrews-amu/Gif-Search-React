@@ -1,5 +1,12 @@
 const colCount = 4;
 
+const myButton = document.querySelector(".mybutton");
+console.log(myButton);
+myButton.onclick = function () {
+  console.log("CLICKED");
+  addRow(1);
+}
+
 function buildRow(childCount) {
   const newDiv = document.createElement("div");
   newDiv.classList.add("boxes");
@@ -18,8 +25,6 @@ function addRow(rowCount) {
   const myParent = document.querySelector("#content");
   for (let i=0; i < rowCount; i++) {
     const myRow = buildRow(colCount); 
-    myParent.appendChild(myRow);
+    myParent.insertAdjacentElement("afterbegin", myRow);
   }
 }
-
-addRow(3);

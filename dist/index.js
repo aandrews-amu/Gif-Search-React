@@ -191,6 +191,13 @@ module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
 var colCount = 4;
+var myButton = document.querySelector(".mybutton");
+console.log(myButton);
+
+myButton.onclick = function () {
+  console.log("CLICKED");
+  addRow(1);
+};
 
 function buildRow(childCount) {
   var newDiv = document.createElement("div");
@@ -213,11 +220,9 @@ function addRow(rowCount) {
 
   for (var i = 0; i < rowCount; i++) {
     var myRow = buildRow(colCount);
-    myParent.appendChild(myRow);
+    myParent.insertAdjacentElement("afterbegin", myRow);
   }
 }
-
-addRow(3);
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 

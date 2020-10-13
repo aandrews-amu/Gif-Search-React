@@ -57,6 +57,10 @@ $main-color: #4e008e;
   }
 }
 
+.mybutton {
+  margin-top: 30px;
+}
+
 .gifs {
   @include make-row();
   margin-top: 30px;
