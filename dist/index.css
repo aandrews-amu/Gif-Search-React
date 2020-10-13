@@ -9947,6 +9947,15 @@ h3 {
   }
 }
 
+.button-row {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
 .page__sidebar {
   position: relative;
   width: 100%;
@@ -10002,8 +10011,10 @@ h3 {
   background-color: white;
 }
 
-#myaddbutton, #myrmbutton {
+#js-add-row, #js-remove-row {
   margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .gifs {

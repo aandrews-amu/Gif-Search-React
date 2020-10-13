@@ -1,14 +1,21 @@
 const colCount = 4;
 
-const myAddButton = document.querySelector("#myaddbutton");
+const myAddButton = document.querySelector("#js-add-row");
 myAddButton.onclick = function () {
   addRow(1);
 }
 
-const myRemoveButton = document.querySelector("#myrmbutton");
-myRemoveButton.onclick = function () {
+const myRemoveButton = document.querySelector("#js-remove-row");
+myRemoveButton.addEventListener('click', function (event) {
+  const numRow = document.querySelectorAll("boxes").length;
+  console.log("rows: " + numRow);
+  if (numRow === 0) {
+    window.alert("No rows available to delete.");
+  }
   removeRow();
-}
+}) 
+
+
 
 function buildRow(childCount) {
   const newDiv = document.createElement("div");
@@ -31,6 +38,7 @@ function addRow(rowCount) {
     myParent.insertAdjacentElement("afterbegin", myRow);
   }
 }
+
 
 function removeRow() {
   const numRows = document.querySelectorAll(".boxes").length;
