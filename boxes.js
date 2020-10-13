@@ -1,10 +1,14 @@
 const colCount = 4;
 
-const myButton = document.querySelector(".mybutton");
-console.log(myButton);
-myButton.onclick = function () {
+const myAddButton = document.querySelector(".myaddbutton");
+myAddButton.onclick = function () {
   console.log("CLICKED");
   addRow(1);
+}
+
+const myRemoveButton = document.querySelector(".myrmbutton");
+myRemoveButton.onclick = function () {
+  removeRow();
 }
 
 function buildRow(childCount) {
@@ -26,5 +30,15 @@ function addRow(rowCount) {
   for (let i=0; i < rowCount; i++) {
     const myRow = buildRow(colCount); 
     myParent.insertAdjacentElement("afterbegin", myRow);
+  }
+}
+
+function removeRow() {
+  const myParent = document.querySelector("#content");
+  const numRows = document.querySelectorAll(".boxes").length;
+  console.log(numRows);
+  if (numRows > 0) {
+    const firstRow = document.querySelector(".boxes");
+    firstRow.remove();
   }
 }
