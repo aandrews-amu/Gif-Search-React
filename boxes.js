@@ -1,42 +1,31 @@
 const colCount = 4;
 let rowCount = 0;
 
-// Hint
-const test = (el) => {
-  console.log(el.id);
-}
-
-const myAddButton = document.querySelector("#js-add-row");
-myAddButton.onclick = function () {
-  addRow();
-}
-
-// THIS PART ISN'T WORKING / WRITTEN YET
-const myRemoveButton = document.querySelectorAll("#js-remove-row");
-console.log(myRemoveButton);
-myRemoveButton.onclick = function(){
-  removeRow();
-  console.log("hello");
-}
-
+// BUILD ROW
 function buildRow(childCount) {
   rowCount++; 
   const newDiv = document.createElement("div");
   newDiv.classList.add("boxes");
+  newDiv.dataset.remove = rowCount;
   // remove button and row div
   const remButton = document.createElement("button");
   const remRow = document.createElement("div");
-  remRow.classList.add("removerow", "text-right", "boxes--");
+  remRow.classList.add("boxes__remove", "text-right");
   remButton.classList.add("btn-outline-secondary", "btn");
   remButton.id = "js-remove-row";
   remButton.innerText = "x"; 
   remButton.type = "button";
+  remButton.dataset.remove = rowCount;
   newDiv.insertAdjacentElement("afterbegin", remRow);
   remRow.appendChild(remButton);
 
-  // Hint
+  // EVENT LISTENER FOR REMOVE BUTTON
   remButton.onclick = function () {
-    test(this);
+    const toRemove = this.dataset.remove;
+    const removeList = document.querySelectorAll(`[data-remove="${toRemove}"]`);
+    removeList.forEach(function(elt) {
+      elt.remove();
+    })
   };
 
   for (let i=0; i < childCount; i++) {
@@ -50,6 +39,7 @@ function buildRow(childCount) {
   return newDiv; 
 }
 
+// ADD ROW
 function addRow() {
   const myParent = document.querySelector("#content");
   const myRow = buildRow(colCount); 
@@ -57,8 +47,8 @@ function addRow() {
   
 }
 
-// THIS PART ISN'T WORKING / WRITTEN YET
-function removeRow() {
-  rowCount--;
-  console.log(rowCount);
+// EVENT LISTENER FOR ADD ROW
+const myAddButton = document.querySelector("#js-add-row");
+myAddButton.onclick = function () {
+  addRow();
 }

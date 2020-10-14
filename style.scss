@@ -55,6 +55,7 @@ $main-color: #4e008e;
   height: 200px;
   box-sizing: border-box;
   margin-top: 15px;
+  margin-bottom: 15px;
   background-color: $main-color;
   &:hover {
     border: 5px solid $main-color;
@@ -62,7 +63,7 @@ $main-color: #4e008e;
   }
 }
 
-.removerow {
+.boxes__remove {
   @include make-col-ready();
   @include make-col(12);
 }

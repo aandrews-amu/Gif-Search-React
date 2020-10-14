@@ -191,44 +191,31 @@ module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
 var colCount = 4;
-var rowCount = 0; // Hint
-
-var test = function test(el) {
-  console.log(el.id);
-};
-
-var myAddButton = document.querySelector("#js-add-row");
-
-myAddButton.onclick = function () {
-  addRow();
-}; // THIS PART ISN'T WORKING / WRITTEN YET
-
-
-var myRemoveButton = document.querySelectorAll("#js-remove-row");
-console.log(myRemoveButton);
-
-myRemoveButton.onclick = function () {
-  removeRow();
-  console.log("hello");
-};
+var rowCount = 0; // BUILD ROW
 
 function buildRow(childCount) {
   rowCount++;
   var newDiv = document.createElement("div");
-  newDiv.classList.add("boxes"); // remove button and row div
+  newDiv.classList.add("boxes");
+  newDiv.dataset.remove = rowCount; // remove button and row div
 
   var remButton = document.createElement("button");
   var remRow = document.createElement("div");
-  remRow.classList.add("removerow", "text-right", "boxes--");
+  remRow.classList.add("boxes__remove", "text-right");
   remButton.classList.add("btn-outline-secondary", "btn");
   remButton.id = "js-remove-row";
   remButton.innerText = "x";
   remButton.type = "button";
+  remButton.dataset.remove = rowCount;
   newDiv.insertAdjacentElement("afterbegin", remRow);
-  remRow.appendChild(remButton); // Hint
+  remRow.appendChild(remButton); // EVENT LISTENER FOR REMOVE BUTTON
 
   remButton.onclick = function () {
-    test(this);
+    var toRemove = this.dataset.remove;
+    var removeList = document.querySelectorAll("[data-remove=\"".concat(toRemove, "\"]"));
+    removeList.forEach(function (elt) {
+      elt.remove();
+    });
   };
 
   for (var i = 0; i < childCount; i++) {
@@ -241,19 +228,21 @@ function buildRow(childCount) {
   }
 
   return newDiv;
-}
+} // ADD ROW
+
 
 function addRow() {
   var myParent = document.querySelector("#content");
   var myRow = buildRow(colCount);
   myParent.insertAdjacentElement("afterbegin", myRow);
-} // THIS PART ISN'T WORKING / WRITTEN YET
+} // EVENT LISTENER FOR ADD ROW
 
 
-function removeRow() {
-  rowCount--;
-  console.log(rowCount);
-}
+var myAddButton = document.querySelector("#js-add-row");
+
+myAddButton.onclick = function () {
+  addRow();
+};
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -288,7 +277,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61708" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64854" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
