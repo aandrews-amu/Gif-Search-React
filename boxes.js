@@ -1,6 +1,11 @@
 const colCount = 4;
 let rowCount = 0;
 
+// Hint
+const test = (el) => {
+  console.log(el.id);
+}
+
 const myAddButton = document.querySelector("#js-add-row");
 myAddButton.onclick = function () {
   addRow();
@@ -28,6 +33,11 @@ function buildRow(childCount) {
   remButton.type = "button";
   newDiv.insertAdjacentElement("afterbegin", remRow);
   remRow.appendChild(remButton);
+
+  // Hint
+  remButton.onclick = function () {
+    test(this);
+  };
 
   for (let i=0; i < childCount; i++) {
     const newCol = document.createElement("div"); 

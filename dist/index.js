@@ -191,7 +191,12 @@ module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
 var colCount = 4;
-var rowCount = 0;
+var rowCount = 0; // Hint
+
+var test = function test(el) {
+  console.log(el.id);
+};
+
 var myAddButton = document.querySelector("#js-add-row");
 
 myAddButton.onclick = function () {
@@ -220,7 +225,11 @@ function buildRow(childCount) {
   remButton.innerText = "x";
   remButton.type = "button";
   newDiv.insertAdjacentElement("afterbegin", remRow);
-  remRow.appendChild(remButton);
+  remRow.appendChild(remButton); // Hint
+
+  remButton.onclick = function () {
+    test(this);
+  };
 
   for (var i = 0; i < childCount; i++) {
     var newCol = document.createElement("div");
@@ -279,7 +288,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64854" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61708" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
