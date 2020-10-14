@@ -191,27 +191,36 @@ module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
 var colCount = 4;
+var rowCount = 0;
 var myAddButton = document.querySelector("#js-add-row");
 
 myAddButton.onclick = function () {
-  addRow(1);
+  addRow();
+}; // THIS PART ISN'T WORKING / WRITTEN YET
+
+
+var myRemoveButton = document.querySelectorAll("#js-remove-row");
+console.log(myRemoveButton);
+
+myRemoveButton.onclick = function () {
+  removeRow();
+  console.log("hello");
 };
 
-var myRemoveButton = document.querySelector("#js-remove-row");
-myRemoveButton.addEventListener('click', function (event) {
-  var numRow = document.querySelectorAll("boxes").length;
-  console.log("rows: " + numRow);
-
-  if (numRow === 0) {
-    window.alert("No rows available to delete.");
-  }
-
-  removeRow();
-});
-
 function buildRow(childCount) {
+  rowCount++;
   var newDiv = document.createElement("div");
-  newDiv.classList.add("boxes");
+  newDiv.classList.add("boxes"); // remove button and row div
+
+  var remButton = document.createElement("button");
+  var remRow = document.createElement("div");
+  remRow.classList.add("removerow", "text-right", "boxes--");
+  remButton.classList.add("btn-outline-secondary", "btn");
+  remButton.id = "js-remove-row";
+  remButton.innerText = "x";
+  remButton.type = "button";
+  newDiv.insertAdjacentElement("afterbegin", remRow);
+  remRow.appendChild(remButton);
 
   for (var i = 0; i < childCount; i++) {
     var newCol = document.createElement("div");
@@ -225,22 +234,16 @@ function buildRow(childCount) {
   return newDiv;
 }
 
-function addRow(rowCount) {
+function addRow() {
   var myParent = document.querySelector("#content");
+  var myRow = buildRow(colCount);
+  myParent.insertAdjacentElement("afterbegin", myRow);
+} // THIS PART ISN'T WORKING / WRITTEN YET
 
-  for (var i = 0; i < rowCount; i++) {
-    var myRow = buildRow(colCount);
-    myParent.insertAdjacentElement("afterbegin", myRow);
-  }
-}
 
 function removeRow() {
-  var numRows = document.querySelectorAll(".boxes").length;
-
-  if (numRows > 0) {
-    var firstRow = document.querySelector(".boxes");
-    firstRow.remove();
-  }
+  rowCount--;
+  console.log(rowCount);
 }
 },{}],"index.js":[function(require,module,exports) {
 "use strict";

@@ -1,25 +1,34 @@
 const colCount = 4;
+let rowCount = 0;
 
 const myAddButton = document.querySelector("#js-add-row");
 myAddButton.onclick = function () {
-  addRow(1);
+  addRow();
 }
 
-const myRemoveButton = document.querySelector("#js-remove-row");
-myRemoveButton.addEventListener('click', function (event) {
-  const numRow = document.querySelectorAll("boxes").length;
-  console.log("rows: " + numRow);
-  if (numRow === 0) {
-    window.alert("No rows available to delete.");
-  }
+// THIS PART ISN'T WORKING / WRITTEN YET
+const myRemoveButton = document.querySelectorAll("#js-remove-row");
+console.log(myRemoveButton);
+myRemoveButton.onclick = function(){
   removeRow();
-}) 
-
-
+  console.log("hello");
+}
 
 function buildRow(childCount) {
+  rowCount++; 
   const newDiv = document.createElement("div");
   newDiv.classList.add("boxes");
+  // remove button and row div
+  const remButton = document.createElement("button");
+  const remRow = document.createElement("div");
+  remRow.classList.add("removerow", "text-right", "boxes--");
+  remButton.classList.add("btn-outline-secondary", "btn");
+  remButton.id = "js-remove-row";
+  remButton.innerText = "x"; 
+  remButton.type = "button";
+  newDiv.insertAdjacentElement("afterbegin", remRow);
+  remRow.appendChild(remButton);
+
   for (let i=0; i < childCount; i++) {
     const newCol = document.createElement("div"); 
     newCol.classList.add("boxes__box"); 
@@ -31,19 +40,15 @@ function buildRow(childCount) {
   return newDiv; 
 }
 
-function addRow(rowCount) {
+function addRow() {
   const myParent = document.querySelector("#content");
-  for (let i=0; i < rowCount; i++) {
-    const myRow = buildRow(colCount); 
-    myParent.insertAdjacentElement("afterbegin", myRow);
-  }
+  const myRow = buildRow(colCount); 
+  myParent.insertAdjacentElement("afterbegin", myRow);
+  
 }
 
-
+// THIS PART ISN'T WORKING / WRITTEN YET
 function removeRow() {
-  const numRows = document.querySelectorAll(".boxes").length;
-  if (numRows > 0) {
-    const firstRow = document.querySelector(".boxes");
-    firstRow.remove();
-  }
+  rowCount--;
+  console.log(rowCount);
 }

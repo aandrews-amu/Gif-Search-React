@@ -10003,7 +10003,7 @@ h3 {
 .square {
   height: 200px;
   box-sizing: border-box;
-  margin-top: 30px;
+  margin-top: 15px;
   background-color: #4e008e;
 }
 .square:hover {
@@ -10011,7 +10011,26 @@ h3 {
   background-color: white;
 }
 
-#js-add-row, #js-remove-row {
+.removerow {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.removerow__button {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 0 0 8.3333333333%;
+  max-width: 8.3333333333%;
+  margin-top: 15px;
+}
+
+.mybutton {
   margin-top: 30px;
   margin-left: 10px;
   margin-right: 10px;
