@@ -60,7 +60,8 @@ function buildRow(childCount, gifType) {
       console.log(typeof newGif);
       console.log(newGif);
       console.log(newSq);
-      newSq.appendChild(myGif);
+      // newSq.appendChild(myGif);
+      newSq.appendChild(newGif);
     })
   }
   return newDiv; 
