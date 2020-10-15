@@ -190,10 +190,24 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
-var colCount = 4;
-var rowCount = 0; // BUILD ROW
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function buildRow(childCount) {
+var colCount = 4;
+var rowCount = 0;
+var q = "ryan+gosling";
+var api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp"; // GET GIFS
+
+function getGifPromise(gifType) {
+  var apiURL = "http://api.giphy.com/v1/gifs/search?q=".concat(gifType, "&api_key=").concat(api_key, "&limit=").concat(colCount);
+  return fetch(apiURL).then(function (response) {
+    return response.json();
+  }).then(function (json) {
+    return json.data;
+  });
+} // BUILD ROW
+
+
+function buildRow(childCount, gifType) {
   rowCount++;
   var newDiv = document.createElement("div");
   newDiv.classList.add("boxes");
@@ -218,13 +232,28 @@ function buildRow(childCount) {
     });
   };
 
-  for (var i = 0; i < childCount; i++) {
+  var _loop = function _loop(i) {
     var newCol = document.createElement("div");
     newCol.classList.add("boxes__box");
     var newSq = document.createElement("div");
     newSq.classList.add("square");
     newCol.appendChild(newSq);
     newDiv.appendChild(newCol);
+    getGifPromise(q).then(function (data) {
+      var myGif = data[i].images.fixed_height.url;
+      console.log(myGif);
+      var newGif = document.createElement("img");
+      newGif.classList.add("img-fluid");
+      newGif.src = myGif;
+      console.log(_typeof(newGif));
+      console.log(newGif);
+      console.log(newSq);
+      newSq.appendChild(myGif);
+    });
+  };
+
+  for (var i = 0; i < childCount; i++) {
+    _loop(i);
   }
 
   return newDiv;
@@ -233,7 +262,7 @@ function buildRow(childCount) {
 
 function addRow() {
   var myParent = document.querySelector("#content");
-  var myRow = buildRow(colCount);
+  var myRow = buildRow(colCount, "ryan+gosling");
   myParent.insertAdjacentElement("afterbegin", myRow);
 } // EVENT LISTENER FOR ADD ROW
 

@@ -1,12 +1,26 @@
 const colCount = 4;
 let rowCount = 0;
+let q = "ryan+gosling";
+let api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
+
+// GET GIFS
+function getGifPromise(gifType) {
+  var apiURL = `http://api.giphy.com/v1/gifs/search?q=${gifType}&api_key=${api_key}&limit=${colCount}`;
+  return fetch(apiURL).then(response => {
+    return response.json();
+  }).then(json => {
+    return json.data;
+  })
+}
+
 
 // BUILD ROW
-function buildRow(childCount) {
+function buildRow(childCount, gifType) {
   rowCount++; 
   const newDiv = document.createElement("div");
   newDiv.classList.add("boxes");
   newDiv.dataset.remove = rowCount;
+
   // remove button and row div
   const remButton = document.createElement("button");
   const remRow = document.createElement("div");
@@ -28,6 +42,7 @@ function buildRow(childCount) {
     })
   };
 
+  
   for (let i=0; i < childCount; i++) {
     const newCol = document.createElement("div"); 
     newCol.classList.add("boxes__box"); 
@@ -35,6 +50,18 @@ function buildRow(childCount) {
     newSq.classList.add("square");
     newCol.appendChild(newSq);
     newDiv.appendChild(newCol);
+
+    getGifPromise(q).then(data => {
+      const myGif = data[i].images.fixed_height.url;
+      console.log(myGif);
+      const newGif = document.createElement("img");
+      newGif.classList.add("img-fluid");
+      newGif.src = myGif; 
+      console.log(typeof newGif);
+      console.log(newGif);
+      console.log(newSq);
+      newSq.appendChild(myGif);
+    })
   }
   return newDiv; 
 }
@@ -42,9 +69,8 @@ function buildRow(childCount) {
 // ADD ROW
 function addRow() {
   const myParent = document.querySelector("#content");
-  const myRow = buildRow(colCount); 
+  const myRow = buildRow(colCount, "ryan+gosling"); 
   myParent.insertAdjacentElement("afterbegin", myRow);
-  
 }
 
 // EVENT LISTENER FOR ADD ROW
