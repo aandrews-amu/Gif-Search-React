@@ -1,11 +1,12 @@
 const colCount = 4;
 let rowCount = 0;
-let q = "ryan+gosling";
-let api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
+const q = "harry+potter";
+const api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
+let offset = 0;
 
 // GET GIFS
 function getGifPromise(gifType) {
-  var apiURL = `http://api.giphy.com/v1/gifs/search?q=${gifType}&api_key=${api_key}&limit=${colCount}`;
+  var apiURL = `http://api.giphy.com/v1/gifs/search?q=${gifType}&api_key=${api_key}&limit=${colCount}&offset=${offset}`;
   return fetch(apiURL).then(response => {
     return response.json();
   }).then(json => {
@@ -53,16 +54,12 @@ function buildRow(childCount, gifType) {
 
     getGifPromise(q).then(data => {
       const myGif = data[i].images.fixed_height.url;
-      console.log(myGif);
       const newGif = document.createElement("img");
       newGif.classList.add("img-fluid");
       newGif.src = myGif; 
-      console.log(typeof newGif);
-      console.log(newGif);
-      console.log(newSq);
-      // newSq.appendChild(myGif);
       newSq.appendChild(newGif);
     })
+    offset += colCount;
   }
   return newDiv; 
 }
@@ -70,7 +67,7 @@ function buildRow(childCount, gifType) {
 // ADD ROW
 function addRow() {
   const myParent = document.querySelector("#content");
-  const myRow = buildRow(colCount, "ryan+gosling"); 
+  const myRow = buildRow(colCount, "harry+potter"); 
   myParent.insertAdjacentElement("afterbegin", myRow);
 }
 

@@ -190,15 +190,14 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 var colCount = 4;
 var rowCount = 0;
-var q = "ryan+gosling";
-var api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp"; // GET GIFS
+var q = "harry+potter";
+var api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
+var offset = 0; // GET GIFS
 
 function getGifPromise(gifType) {
-  var apiURL = "http://api.giphy.com/v1/gifs/search?q=".concat(gifType, "&api_key=").concat(api_key, "&limit=").concat(colCount);
+  var apiURL = "http://api.giphy.com/v1/gifs/search?q=".concat(gifType, "&api_key=").concat(api_key, "&limit=").concat(colCount, "&offset=").concat(offset);
   return fetch(apiURL).then(function (response) {
     return response.json();
   }).then(function (json) {
@@ -241,16 +240,12 @@ function buildRow(childCount, gifType) {
     newDiv.appendChild(newCol);
     getGifPromise(q).then(function (data) {
       var myGif = data[i].images.fixed_height.url;
-      console.log(myGif);
       var newGif = document.createElement("img");
       newGif.classList.add("img-fluid");
       newGif.src = myGif;
-      console.log(_typeof(newGif));
-      console.log(newGif);
-      console.log(newSq); // newSq.appendChild(myGif);
-
       newSq.appendChild(newGif);
     });
+    offset += colCount;
   };
 
   for (var i = 0; i < childCount; i++) {
@@ -263,7 +258,7 @@ function buildRow(childCount, gifType) {
 
 function addRow() {
   var myParent = document.querySelector("#content");
-  var myRow = buildRow(colCount, "ryan+gosling");
+  var myRow = buildRow(colCount, "harry+potter");
   myParent.insertAdjacentElement("afterbegin", myRow);
 } // EVENT LISTENER FOR ADD ROW
 
@@ -307,7 +302,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61682" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64854" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
