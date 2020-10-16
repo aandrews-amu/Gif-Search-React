@@ -80,11 +80,11 @@ $main-color: #4e008e;
   margin-right: 10px;
 }
 
-.gifs {
-  @include make-row();
-  margin-top: 30px;
-  border: 2px solid $main-color;
-}
+// .gifs {
+//   @include make-row();
+//   margin-top: 30px;
+//   border: 2px solid $main-color;
+// }
 
 .gifs__gif {
   @include make-col-ready();
@@ -92,4 +92,9 @@ $main-color: #4e008e;
   @include media-breakpoint-up(lg) {
     @include make-col(12);
   }
+}
+
+.search { 
+  @include make-row();
+  border: 2px solid $main-color;
 }
