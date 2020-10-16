@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "parcel index.js"
   },
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "dependencies": {
     "bootstrap": "^4.5.2"
   },
