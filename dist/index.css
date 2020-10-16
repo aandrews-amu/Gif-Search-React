@@ -9947,15 +9947,6 @@ h3 {
   }
 }
 
-.button-row {
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
 .page__sidebar {
   position: relative;
   width: 100%;
@@ -10010,31 +10001,6 @@ h3 {
 .square:hover {
   border: 5px solid #4e008e;
   background-color: white;
-}
-
-.boxes__remove {
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-.removerow__button {
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  flex: 0 0 8.3333333333%;
-  max-width: 8.3333333333%;
-  margin-top: 15px;
-}
-
-.mybutton {
-  margin-top: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .gifs__gif {

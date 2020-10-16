@@ -22,10 +22,10 @@ $main-color: #4e008e;
   }
 }
 
-.button-row {
-  @include make-col-ready();
-  @include make-col(12);
-}
+// .button-row {
+//   @include make-col-ready();
+//   @include make-col(12);
+// }
 
 .page__sidebar {
   @include make-col-ready();
@@ -63,22 +63,22 @@ $main-color: #4e008e;
   }
 }
 
-.boxes__remove {
-  @include make-col-ready();
-  @include make-col(12);
-}
+// .boxes__remove {
+//   @include make-col-ready();
+//   @include make-col(12);
+// }
 
-.removerow__button {
-  @include make-col-ready();
-  @include make-col(1);
-  margin-top: 15px;
-}
+// .removerow__button {
+//   @include make-col-ready();
+//   @include make-col(1);
+//   margin-top: 15px;
+// }
 
-.mybutton {
-  margin-top: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
+// .mybutton {
+//   margin-top: 30px;
+//   margin-left: 10px;
+//   margin-right: 10px;
+// }
 
 // .gifs {
 //   @include make-row();
