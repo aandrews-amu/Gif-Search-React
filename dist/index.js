@@ -256,7 +256,6 @@ form.onsubmit = function (event) {
   const searchTerm = document.getElementById("search-term").value.trim();
   const numGifs = document.getElementById("num-gif").value;
   const formattedSearchTerm = searchTerm.replace(/ /g, "+");
-  console.log(formattedSearchTerm);
   const myParent = document.querySelector("#content");
   buildRow(numGifs, formattedSearchTerm).then(function (res) {
     myParent.prepend(res);
