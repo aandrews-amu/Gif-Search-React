@@ -200,29 +200,28 @@ function getGifs(limit, query) {
 }
 
 function buildRemoveButton() {
-  const remButton = document.createElement("button");
-  remButton.classList.add("btn-outline-secondary", "btn");
-  remButton.innerText = "x";
-  remButton.type = "button";
-  remButton.dataset.remove = numCols;
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("btn-outline-secondary", "btn");
+  removeButton.innerText = "x";
+  removeButton.type = "button";
+  removeButton.dataset.remove = numCols;
 
-  remButton.onclick = function () {
+  removeButton.onclick = function () {
     document.querySelector(`[data-remove="${this.dataset.remove}"]`).remove();
   };
 
-  return remButton;
+  return removeButton;
 }
 
 function buildCol(gifUrl) {
   numCols++;
-  const newCol = document.createElement("div");
-  newCol.classList.add("boxes__box");
-  newCol.dataset.remove = numCols;
-  newCol.innerHTML = `
-    <div class="square"><img class="img-fluid" src="${gifUrl}" /></div>
-  `;
-  newCol.appendChild(buildRemoveButton());
-  return newCol;
+  const column = document.createElement("div");
+  column.classList.add("boxes__box");
+  column.dataset.remove = numCols;
+  const square = document.createElement("div");
+  column.appendChild(buildRemoveButton());
+  column.insertAdjacentHTML("beforeend", `<div class="square"><img class="img-fluid" src="${gifUrl}" /></div>`);
+  return column;
 }
 
 async function buildRow(childCount, gifType) {
@@ -230,23 +229,23 @@ async function buildRow(childCount, gifType) {
   const existRow = document.querySelector(".boxes") != undefined;
 
   if (existRow) {
-    rowDiv = document.querySelector(".boxes");
+    row = document.querySelector(".boxes");
     const gifs = await getGifs(childCount, gifType);
     gifs.data.forEach(function (gif) {
       const col = buildCol(gif.images.fixed_height.url);
-      rowDiv.appendChild(col);
+      row.appendChild(col);
     });
   } else {
-    rowDiv = document.createElement("div");
-    rowDiv.classList.add("boxes");
+    row = document.createElement("div");
+    row.classList.add("boxes");
     const gifs = await getGifs(childCount, gifType);
     gifs.data.forEach(function (gif) {
       const col = buildCol(gif.images.fixed_height.url);
-      rowDiv.appendChild(col);
+      row.appendChild(col);
     });
   }
 
-  return rowDiv;
+  return row;
 }
 
 const form = document.getElementById("form");
@@ -256,9 +255,9 @@ form.onsubmit = function (event) {
   const searchTerm = document.getElementById("search-term").value.trim();
   const numGifs = document.getElementById("num-gif").value;
   const formattedSearchTerm = searchTerm.replace(/ /g, "+");
-  const myParent = document.querySelector("#content");
+  const parent = document.querySelector("#content");
   buildRow(numGifs, formattedSearchTerm).then(function (res) {
-    myParent.prepend(res);
+    parent.prepend(res);
   });
 };
 },{}],"index.js":[function(require,module,exports) {
@@ -295,7 +294,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49995" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54478" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
