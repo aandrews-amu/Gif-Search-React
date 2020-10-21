@@ -190,168 +190,75 @@ var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
-// No longer needed colCount after refactoring
-// const colCount = 4;
-let rowCount = 0; // Moved these vars to getGifs, since the rest of the script does
-// not need to use these vars, prob best to keep them scoped
-// to the function that does.
-// const q = "harry+potter";
-// const api_key = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
-// See below, we can eliminate offset by
-// calculating it based on rowCount in getGifs
-// let offset = 0;
-// GET GIFS
-// function getGifPromise(gifType) {
-//   var apiURL = `http://api.giphy.com/v1/gifs/search?q=${gifType}&api_key=${api_key}&limit=${colCount}&offset=${offset}`;
-//   return fetch(apiURL).then(response => {
-//     return response.json();
-//   }).then(json => {
-//     return json.data;
-//   })
-// }
-// Refactored this slightly to accept 'query' and 'limit'
-// as a parameters to make it a little more flexible. 
+let numCols = 0;
 
 function getGifs(limit, query) {
-  const apiKey = '7Erj1LUTR77H1QvQeKYB8aAXambSNMyp';
-  const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${query}&api_key=${apiKey}&limit=${limit}&offset=${rowCount * limit}`;
+  const apiKey = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
+  const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${query}&api_key=${apiKey}&limit=${limit}&offset=${numCols}`;
   const gifs = fetch(apiUrl).then(response => response.json());
   return gifs;
-} // BUILD ROW
-// function buildRow(childCount, gifType) {
-// rowCount++; 
-// const newDiv = document.createElement("div");
-// newDiv.classList.add("boxes");
-// newDiv.dataset.remove = rowCount;
-// remove button and row div
-// const remButton = document.createElement("button");
-// const remRow = document.createElement("div");
-// remRow.classList.add("boxes__remove", "text-right");
-// remButton.classList.add("btn-outline-secondary", "btn");
-// remButton.id = "js-remove-row";
-// remButton.innerText = "x"; 
-// remButton.type = "button";
-// remButton.dataset.remove = rowCount;
-// newDiv.insertAdjacentElement("afterbegin", remRow);
-// remRow.appendChild(remButton);
-// EVENT LISTENER FOR REMOVE BUTTON
-// remButton.onclick = function () {
-//   const toRemove = this.dataset.remove;
-//   const removeList = document.querySelectorAll(`[data-remove="${toRemove}"]`);
-//   removeList.forEach(function(elt) {
-//     elt.remove();
-//   })
-// };
-//   for (let i=0; i < childCount; i++) {
-//     const newCol = document.createElement("div"); 
-//     newCol.classList.add("boxes__box"); 
-//     const newSq = document.createElement("div");
-//     newSq.classList.add("square");
-//     newCol.appendChild(newSq);
-//     newDiv.appendChild(newCol);
-//     getGifPromise(q).then(data => {
-//       const myGif = data[i].images.fixed_height.url;
-//       const newGif = document.createElement("img");
-//       newGif.classList.add("img-fluid");
-//       newGif.src = myGif; 
-//       newSq.appendChild(newGif);
-//     })
-//     offset += colCount;
-//   }
-//   return newDiv; 
-// }
-
+}
 
 function buildRemoveButton() {
-  const remButton = document.createElement("button");
-  remButton.classList.add("btn-outline-secondary", "btn");
-  remButton.id = "js-remove-row";
-  remButton.innerText = "x";
-  remButton.type = "button";
-  remButton.dataset.remove = rowCount;
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("btn-outline-secondary", "btn");
+  removeButton.innerText = "x";
+  removeButton.type = "button";
+  removeButton.dataset.remove = numCols;
 
-  remButton.onclick = function () {
-    // Cleaned this up a little to make it a one-liner
-    // const toRemove = this.dataset.remove;
-    // const removeList = document.querySelector(`[data-remove="${toRemove}"]`);
-    // removeList.remove();
-    // removeList.forEach(function(elt) {
-    //   elt.remove();
-    // })
+  removeButton.onclick = function () {
     document.querySelector(`[data-remove="${this.dataset.remove}"]`).remove();
   };
 
-  return remButton;
+  return removeButton;
 }
 
 function buildCol(gifUrl) {
-  const newCol = document.createElement("div");
-  newCol.classList.add("boxes__box"); // Refactored this to show you another way
-  // of building elements like this. Sometimes
-  // when I'm building a complex element with a lot
-  // of children, I like to go this route to save
-  // all of the foo.bar()
-  // const newSq = document.createElement("div");
-  // newSq.classList.add("square");
-  // const newGif = document.createElement("img");
-  // newGif.classList.add("img-fluid");
-  // newGif.src = gifUrl;
-  // newSq.appendChild(newGif);
-  // newCol.appendChild(newSq);
-
-  newCol.innerHTML = `
-    <div class="square"><img class="img-fluid" src="${gifUrl}" /></div>
-  `;
-  return newCol;
+  numCols++;
+  const column = document.createElement("div");
+  column.classList.add("boxes__box");
+  column.dataset.remove = numCols;
+  const square = document.createElement("div");
+  column.appendChild(buildRemoveButton());
+  column.insertAdjacentHTML("beforeend", `<div class="square"><img class="img-fluid" src="${gifUrl}" /></div>`);
+  return column;
 }
 
 async function buildRow(childCount, gifType) {
-  rowCount++;
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("boxes");
-  newDiv.dataset.remove = rowCount;
-  const remRow = document.createElement("div");
-  remRow.classList.add("boxes__remove", "text-right");
-  const remButton = buildRemoveButton();
-  remRow.appendChild(remButton);
-  newDiv.appendChild(remRow); // Using await here b/c we want to make sure
-  // the api call has completed before continuing
+  let rowDiv;
+  const existRow = document.querySelector(".boxes") != undefined;
 
-  const gifs = await getGifs(childCount, gifType);
-  gifs.data.forEach(function (gif) {
-    const col = buildCol(gif.images.fixed_height.url);
-    newDiv.appendChild(col);
+  if (existRow) {
+    row = document.querySelector(".boxes");
+    const gifs = await getGifs(childCount, gifType);
+    gifs.data.forEach(function (gif) {
+      const col = buildCol(gif.images.fixed_height.url);
+      row.appendChild(col);
+    });
+  } else {
+    row = document.createElement("div");
+    row.classList.add("boxes");
+    const gifs = await getGifs(childCount, gifType);
+    gifs.data.forEach(function (gif) {
+      const col = buildCol(gif.images.fixed_height.url);
+      row.appendChild(col);
+    });
+  }
+
+  return row;
+}
+
+const form = document.getElementById("form");
+
+form.onsubmit = function (event) {
+  event.preventDefault();
+  const searchTerm = document.getElementById("search-term").value.trim();
+  const numGifs = document.getElementById("num-gif").value;
+  const formattedSearchTerm = searchTerm.replace(/ /g, "+");
+  const parent = document.querySelector("#content");
+  buildRow(numGifs, formattedSearchTerm).then(function (res) {
+    parent.prepend(res);
   });
-  return newDiv;
-} // ADD ROW
-// function addRow() {
-//   const myParent = document.querySelector("#content");
-//   const myRow = buildRow(colCount, "harry+potter"); 
-//   myParent.insertAdjacentElement("afterbegin", myRow);
-// }
-// Refactored this to work with new buildRow().
-// Please have another look at async functions,
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-// but in a nut shell, buildRow() returns a promise
-// once the promise is resolved, we can access the
-// function's return value in res.
-// Also, please notice the use of prepend(),
-// this is just the opposite of appendChild(),
-// so we can keep our rows above the add button.
-
-
-function addRow() {
-  const myParent = document.querySelector("#content");
-  buildRow(4, 'harry+potter').then(function (res) {
-    myParent.prepend(res);
-  });
-} // EVENT LISTENER FOR ADD ROW
-
-
-const myAddButton = document.querySelector("#js-add-row");
-
-myAddButton.onclick = function () {
-  addRow();
 };
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -387,7 +294,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52014" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54478" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

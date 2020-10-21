@@ -7,27 +7,16 @@
     <div class="page-container">
       <div class="page">
         <div class="page__content" id="content">
-          <div class= "button-row">
-            <div class= text-center> 
-              <button class="btn-outline-secondary btn mybutton" id= "js-add-row" type="button"> Add Row </button>
-            </div>
-          </div>
         </div>
         <div class="page__sidebar">
-          <div class="gifs">
-            <div class="gifs__gif">
-              <img
-                class="img-fluid"
-                 src="https://media.giphy.com/media/qPCln5TSOsdRS/giphy.gif"
-                
-              />
-            </div>
-            <div class="gifs__gif">
-              <img
-                class="img-fluid"
-                src="https://media.giphy.com/media/xBcBAQnWxpWX6/giphy.gif"
-              />
-            </div>
+          <div class="search">
+            <form id="form"> 
+              <label for="search-term">Search Term: </label><br>
+              <input type="text" id="search-term" name="search-term" class="form-control"><br>
+              <label for="num-gif">Number of Gifs: </label><br>
+              <input type="text" id="num-gif" name="num-gif" class="form-control"><br>
+              <input type="submit" value="Send Request" class="form-control">
+            </form>
           </div>
         </div>
       </div>

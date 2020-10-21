@@ -22,11 +22,6 @@ $main-color: #4e008e;
   }
 }
 
-.button-row {
-  @include make-col-ready();
-  @include make-col(12);
-}
-
 .page__sidebar {
   @include make-col-ready();
   @include make-col(12);
@@ -57,33 +52,6 @@ $main-color: #4e008e;
   margin-top: 15px;
   margin-bottom: 15px;
   background-color: $main-color;
-  &:hover {
-    border: 5px solid $main-color;
-    background-color: white; 
-  }
-}
-
-.boxes__remove {
-  @include make-col-ready();
-  @include make-col(12);
-}
-
-.removerow__button {
-  @include make-col-ready();
-  @include make-col(1);
-  margin-top: 15px;
-}
-
-.mybutton {
-  margin-top: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.gifs {
-  @include make-row();
-  margin-top: 30px;
-  border: 2px solid $main-color;
 }
 
 .gifs__gif {
@@ -92,4 +60,10 @@ $main-color: #4e008e;
   @include media-breakpoint-up(lg) {
     @include make-col(12);
   }
+}
+
+.search { 
+  @include make-row();
+  border: 2px solid $main-color;
+  padding: 15px;
 }
