@@ -117,156 +117,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"boxes.js":[function(require,module,exports) {
-let numCols = 0;
-
-function getGifs(limit, query) {
-  const apiKey = "7Erj1LUTR77H1QvQeKYB8aAXambSNMyp";
-  const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${query}&api_key=${apiKey}&limit=${limit}&offset=${numCols}`;
-  const gifs = fetch(apiUrl).then(response => response.json());
-  return gifs;
-}
-
-function buildRemoveButton() {
-  const removeButton = document.createElement("button");
-  removeButton.classList.add("btn-outline-secondary", "btn");
-  removeButton.innerText = "x";
-  removeButton.type = "button";
-  removeButton.dataset.remove = numCols;
-
-  removeButton.onclick = function () {
-    document.querySelector(`[data-remove="${this.dataset.remove}"]`).remove();
-  };
-
-  return removeButton;
-}
-
-function buildCol(gifUrl) {
-  numCols++;
-  const column = document.createElement("div");
-  column.classList.add("boxes__box");
-  column.dataset.remove = numCols;
-  const square = document.createElement("div");
-  column.appendChild(buildRemoveButton());
-  column.insertAdjacentHTML("beforeend", `<div class="square"><img class="img-fluid" src="${gifUrl}" /></div>`);
-  return column;
-}
-
-async function buildRow(childCount, gifType) {
-  let rowDiv;
-  const existRow = document.querySelector(".boxes") != undefined;
-
-  if (existRow) {
-    row = document.querySelector(".boxes");
-    const gifs = await getGifs(childCount, gifType);
-    gifs.data.forEach(function (gif) {
-      const col = buildCol(gif.images.fixed_height.url);
-      row.appendChild(col);
-    });
-  } else {
-    row = document.createElement("div");
-    row.classList.add("boxes");
-    const gifs = await getGifs(childCount, gifType);
-    gifs.data.forEach(function (gif) {
-      const col = buildCol(gif.images.fixed_height.url);
-      row.appendChild(col);
-    });
-  }
-
-  return row;
-}
-
-const form = document.getElementById("form");
-
-form.onsubmit = function (event) {
-  event.preventDefault();
-  const searchTerm = document.getElementById("search-term").value.trim();
-  const numGifs = document.getElementById("num-gif").value;
-  const formattedSearchTerm = searchTerm.replace(/ /g, "+");
-  const parent = document.querySelector("#content");
-  buildRow(numGifs, formattedSearchTerm).then(function (res) {
-    parent.prepend(res);
-  });
-};
-},{}],"index.js":[function(require,module,exports) {
+})({"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./style.scss");
 
 require('./boxes.js');
-},{"./style.scss":"style.scss","./boxes.js":"boxes.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+require('./reactDemo.jsx');
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -294,7 +153,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54478" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61912" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
