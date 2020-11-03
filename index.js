@@ -1,4 +1,4 @@
 import './style.scss';
 
-require('./boxes.js');
+// require('./boxes.js');
 require('./reactDemo.js');
