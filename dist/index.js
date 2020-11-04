@@ -29911,26 +29911,27 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 const SquareComponent = () => {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const [boxes, setBoxes] = (0, _react.useState)(arr); // so when i go to remove one, do i just remove it from the array...? and how?
+  const [boxes, setBoxes] = (0, _react.useState)(arr);
 
   const handleRemove = box => {
-    console.log(boxes);
-    const newBoxes = boxes;
-    newBoxes.splice(box - 1, 1);
-    setBoxes(newBoxes);
-    console.log(boxes);
+    // The key was creating a new array,
+    // instead of using the existing boxes array
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+    const temp = [...boxes];
+    temp.splice(box, 1);
+    setBoxes(temp);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "boxes"
-  }, boxes.map(box => /*#__PURE__*/_react.default.createElement("div", {
+  }, boxes.map((box, index) => /*#__PURE__*/_react.default.createElement("div", {
     className: "boxes__box",
     key: box
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: "btn-outline secondary btn",
-    onClick: () => handleRemove(box),
+    onClick: () => handleRemove(index),
     key: box
-  }, " x "), /*#__PURE__*/_react.default.createElement("div", {
+  }, " ", "x", " "), /*#__PURE__*/_react.default.createElement("div", {
     className: "square"
   }, " ", box, " "))));
 };
@@ -30015,7 +30016,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52728" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58921" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
