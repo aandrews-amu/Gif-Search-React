@@ -29844,7 +29844,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/SquareComponent.jsx":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/SearchComponent.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29852,19 +29852,87 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const SearchComponent = () => {
+  const [numGifs, setNumGifs] = (0, _react.useState)(0); // handle the num of squares
+  // also not working yet
+
+  const handleSubmit = e => {
+    e.preventDefault(); // const newNumGifs = parseInt(document.getElementById('num-gif').value);
+    // setNumGifs(newNumGifs);
+
+    console.log(numGifs);
+  };
+
+  return /*#__PURE__*/_react.default.createElement("form", {
+    id: "form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "search-term"
+  }, "Search Term: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
+    id: "search-term",
+    name: "search-term",
+    className: "form-control"
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "num-gif"
+  }, "Number of Gifs: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
+    id: "num-gif",
+    name: "num-gif",
+    className: "form-control"
+  }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
+    type: "submit",
+    value: "Send Request",
+    className: "form-control"
+  }));
+};
+
+var _default = SearchComponent;
+exports.default = _default;
+},{"react":"node_modules/react/index.js"}],"components/SquareComponent.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const SquareComponent = () => {
-  const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+  const [boxes, setBoxes] = (0, _react.useState)(arr); // so when i go to remove one, do i just remove it from the array...? and how?
+
+  const handleRemove = box => {
+    console.log(boxes);
+    const newBoxes = boxes;
+    newBoxes.splice(box - 1, 1);
+    setBoxes(newBoxes);
+    console.log(boxes);
+  };
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "boxes"
-  }, arr.map(() => /*#__PURE__*/_react.default.createElement("div", {
-    className: "boxes__box"
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, boxes.map(box => /*#__PURE__*/_react.default.createElement("div", {
+    className: "boxes__box",
+    key: box
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "btn-outline secondary btn",
+    onClick: () => handleRemove(box),
+    key: box
+  }, " x "), /*#__PURE__*/_react.default.createElement("div", {
     className: "square"
-  }, " "))));
+  }, " ", box, " "))));
 };
 
 var _default = SquareComponent;
@@ -29879,6 +29947,8 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _SearchComponent = _interopRequireDefault(require("./components/SearchComponent.jsx"));
+
 var _SquareComponent = _interopRequireDefault(require("./components/SquareComponent.jsx"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -29891,33 +29961,14 @@ const App = () => /*#__PURE__*/_react.default.createElement("div", {
   className: "page__content"
 }, /*#__PURE__*/_react.default.createElement(_SquareComponent.default, null)), /*#__PURE__*/_react.default.createElement("div", {
   className: "page__sidebar"
-}, /*#__PURE__*/_react.default.createElement("form", {
-  id: "form"
-}, /*#__PURE__*/_react.default.createElement("label", {
-  for: "search-term"
-}, "Search Term: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
-  type: "text",
-  id: "search-term",
-  name: "search-term",
-  className: "form-control"
-}), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", {
-  for: "num-gif"
-}, "Number of Gifs: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
-  type: "text",
-  id: "num-gif",
-  name: "num-gif",
-  className: "form-control"
-}), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
-  type: "submit",
-  value: "Send Request",
-  className: "form-control"
-})))));
+}, /*#__PURE__*/_react.default.createElement(_SearchComponent.default, null))));
 
 var _default = App; // hooks
 // one componet that has state and a button that updates a state value and rendering that value
+// context api
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./components/SquareComponent.jsx":"components/SquareComponent.jsx"}],"reactDemo.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./components/SearchComponent.jsx":"components/SearchComponent.jsx","./components/SquareComponent.jsx":"components/SquareComponent.jsx"}],"reactDemo.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -29964,7 +30015,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61912" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52728" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
