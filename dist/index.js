@@ -29859,36 +29859,48 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const SearchComponent = () => {
-  const [numGifs, setNumGifs] = (0, _react.useState)(0); // handle the num of squares
-  // also not working yet
+  const [gifs, setGifs] = (0, _react.useState)({});
+
+  const handleChange = ({
+    target
+  }) => {
+    const {
+      name,
+      value
+    } = target;
+    setGifs(prevGifs => ({ ...prevGifs,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = e => {
-    e.preventDefault(); // const newNumGifs = parseInt(document.getElementById('num-gif').value);
-    // setNumGifs(newNumGifs);
-
-    console.log(numGifs);
+    e.preventDefault();
+    alert(JSON.stringify(gifs, '', 2));
   };
 
   return /*#__PURE__*/_react.default.createElement("form", {
     id: "form",
     onSubmit: handleSubmit
   }, /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: "search-term"
+    htmlFor: "searchTerm"
   }, "Search Term: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
+    value: gifs.searchTerm || '',
+    onChange: handleChange,
+    name: "searchTerm",
     type: "text",
-    id: "search-term",
-    name: "search-term",
+    placeholder: "Search Term",
     className: "form-control"
   }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: "num-gif"
+    htmlFor: "numGif"
   }, "Number of Gifs: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
+    value: gifs.numGif || '',
+    onChange: handleChange,
     type: "text",
-    id: "num-gif",
-    name: "num-gif",
+    name: "numGif",
+    placeholder: "0",
     className: "form-control"
   }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
     type: "submit",
-    value: "Send Request",
     className: "form-control"
   }));
 };
@@ -29954,15 +29966,22 @@ var _SquareComponent = _interopRequireDefault(require("./components/SquareCompon
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const App = () => /*#__PURE__*/_react.default.createElement("div", {
-  className: "page-container"
-}, /*#__PURE__*/_react.default.createElement("div", {
-  className: "page"
-}, /*#__PURE__*/_react.default.createElement("div", {
-  className: "page__content"
-}, /*#__PURE__*/_react.default.createElement(_SquareComponent.default, null)), /*#__PURE__*/_react.default.createElement("div", {
-  className: "page__sidebar"
-}, /*#__PURE__*/_react.default.createElement(_SearchComponent.default, null))));
+const App = () => {
+  //const [gifs, setGifs] = useState({});
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "page-container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "page"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "page__content"
+  }, /*#__PURE__*/_react.default.createElement(_SquareComponent.default
+  /*numGif={gifs.numGif}*/
+  , null)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "page__sidebar"
+  }, /*#__PURE__*/_react.default.createElement(_SearchComponent.default
+  /*gifs={gifs}*/
+  , null))));
+};
 
 var _default = App; // hooks
 // one componet that has state and a button that updates a state value and rendering that value
@@ -30016,7 +30035,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58921" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52728" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

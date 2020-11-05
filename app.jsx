@@ -2,18 +2,22 @@ import React from 'react';
 import SearchComponent from './components/SearchComponent.jsx';
 import SquareComponent from './components/SquareComponent.jsx';
 
-const App = () => (
+const App = () => {
+  //const [gifs, setGifs] = useState({});
+
+  return (
     <div className="page-container">
       <div className="page">
         <div className="page__content">
-          <SquareComponent/>
+          <SquareComponent /*numGif={gifs.numGif}*//>
         </div>
         <div className="page__sidebar">
-          <SearchComponent/>
+          <SearchComponent /*gifs={gifs}*/ />
         </div>
       </div>
     </div>
-  );
+  )
+};
 
 export default App;
 
