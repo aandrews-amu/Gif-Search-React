@@ -1,31 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from '../app.jsx';
 
 const SquareComponent = () => {
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const [boxes, setBoxes] = useState(arr);
+  const globalContext = useContext(AppContext);
 
   const handleRemove = (box) => {
-    // The key was creating a new array,
-    // instead of using the existing boxes array
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-    const temp = [...boxes];
+    const temp = [...globalContext.gifs];
     temp.splice(box, 1);
-    setBoxes(temp);
+    globalContext.updateGifs(temp);
   };
 
   return (
     <div className="boxes">
-      {boxes.map((box, index) => (
-        <div className="boxes__box" key={box}>
+      {globalContext.gifs.map((box, index) => (
+        <div className="boxes__box" key={index}>
           <button
-            className="btn-outline secondary btn"
+            className="btn-outline-secondary btn"
             onClick={() => handleRemove(index)}
-            key={box}
+            key={index}
           >
-            {" "}
-            x{" "}
+            {' '}
+            x{' '}
           </button>
-          <div className="square"> {box} </div>
+          <div className="square"> {index}
+            <img className="img-fluid" src={ box } />
+          </div>
         </div>
       ))}
     </div>

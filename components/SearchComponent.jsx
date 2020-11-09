@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../app.jsx';
 
 const SearchComponent = () => {
-  const [gifs, setGifs] = useState({});
+  const globalContext = useContext(AppContext);
 
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    setGifs((prevGifs) => ({
-      ...prevGifs,
-      [name]: value,
-    }));
+  const [numGifs, setNumGifs] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const getGifs = () => {
+    const apiKey = '7Erj1LUTR77H1QvQeKYB8aAXambSNMyp';
+    const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${searchTerm}&api_key=${apiKey}&limit=${numGifs}`;
+    const gifs = fetch(apiUrl).then((response) => response.json());
+    return gifs;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const gifArray = [];
     e.preventDefault();
-    alert(JSON.stringify(gifs, '', 2));
+    const gifs = await getGifs();
+    gifs.data.forEach((gif) => {
+      gifArray.push(gif.images.fixed_height.url);
+    });
+    globalContext.updateGifs(gifArray);
   };
 
   return (
-    <form id="form" onSubmit={handleSubmit}>
+    <form id="form" onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="searchTerm">Search Term: </label><br/>
       <input
-        value={gifs.searchTerm || ''}
-        onChange={handleChange}
+        onChange={(event) => setSearchTerm(event.target.value)}
         name="searchTerm"
         type="text"
         placeholder="Search Term"
@@ -29,8 +36,7 @@ const SearchComponent = () => {
       /><br/>
       <label htmlFor="numGif">Number of Gifs: </label><br/>
       <input
-        value={gifs.numGif || ''}
-        onChange={handleChange}
+        onChange={(event) => setNumGifs(event.target.value)}
         type="text"
         name="numGif"
         placeholder = "0"

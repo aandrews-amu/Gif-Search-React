@@ -29854,38 +29854,41 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _app = require("../app.jsx");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const SearchComponent = () => {
-  const [gifs, setGifs] = (0, _react.useState)({});
+  const globalContext = (0, _react.useContext)(_app.AppContext);
+  const [numGifs, setNumGifs] = (0, _react.useState)('');
+  const [searchTerm, setSearchTerm] = (0, _react.useState)('');
 
-  const handleChange = ({
-    target
-  }) => {
-    const {
-      name,
-      value
-    } = target;
-    setGifs(prevGifs => ({ ...prevGifs,
-      [name]: value
-    }));
+  const getGifs = () => {
+    const apiKey = '7Erj1LUTR77H1QvQeKYB8aAXambSNMyp';
+    const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${searchTerm}&api_key=${apiKey}&limit=${numGifs}`;
+    const gifs = fetch(apiUrl).then(response => response.json());
+    return gifs;
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
+    const gifArray = [];
     e.preventDefault();
-    alert(JSON.stringify(gifs, '', 2));
+    const gifs = await getGifs();
+    gifs.data.forEach(gif => {
+      gifArray.push(gif.images.fixed_height.url);
+    });
+    globalContext.updateGifs(gifArray);
   };
 
   return /*#__PURE__*/_react.default.createElement("form", {
     id: "form",
-    onSubmit: handleSubmit
+    onSubmit: e => handleSubmit(e)
   }, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "searchTerm"
   }, "Search Term: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
-    value: gifs.searchTerm || '',
-    onChange: handleChange,
+    onChange: event => setSearchTerm(event.target.value),
     name: "searchTerm",
     type: "text",
     placeholder: "Search Term",
@@ -29893,8 +29896,7 @@ const SearchComponent = () => {
   }), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "numGif"
   }, "Number of Gifs: "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
-    value: gifs.numGif || '',
-    onChange: handleChange,
+    onChange: event => setNumGifs(event.target.value),
     type: "text",
     name: "numGif",
     placeholder: "0",
@@ -29907,7 +29909,7 @@ const SearchComponent = () => {
 
 var _default = SearchComponent;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"components/SquareComponent.jsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../app.jsx":"app.jsx"}],"components/SquareComponent.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29917,48 +29919,49 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _app = require("../app.jsx");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const SquareComponent = () => {
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const [boxes, setBoxes] = (0, _react.useState)(arr);
+  const globalContext = (0, _react.useContext)(_app.AppContext);
 
   const handleRemove = box => {
-    // The key was creating a new array,
-    // instead of using the existing boxes array
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-    const temp = [...boxes];
+    const temp = [...globalContext.gifs];
     temp.splice(box, 1);
-    setBoxes(temp);
+    globalContext.updateGifs(temp);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "boxes"
-  }, boxes.map((box, index) => /*#__PURE__*/_react.default.createElement("div", {
+  }, globalContext.gifs.map((box, index) => /*#__PURE__*/_react.default.createElement("div", {
     className: "boxes__box",
-    key: box
+    key: index
   }, /*#__PURE__*/_react.default.createElement("button", {
-    className: "btn-outline secondary btn",
+    className: "btn-outline-secondary btn",
     onClick: () => handleRemove(index),
-    key: box
-  }, " ", "x", " "), /*#__PURE__*/_react.default.createElement("div", {
+    key: index
+  }, ' ', "x", ' '), /*#__PURE__*/_react.default.createElement("div", {
     className: "square"
-  }, " ", box, " "))));
+  }, " ", index, /*#__PURE__*/_react.default.createElement("img", {
+    className: "img-fluid",
+    src: box
+  })))));
 };
 
 var _default = SquareComponent;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"app.jsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../app.jsx":"app.jsx"}],"app.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.AppContext = exports.App = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _SearchComponent = _interopRequireDefault(require("./components/SearchComponent.jsx"));
 
@@ -29966,28 +29969,47 @@ var _SquareComponent = _interopRequireDefault(require("./components/SquareCompon
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// TODO
+// - weird array thing
+// - gifs overflowing
+// - removing by index
+// - import dependency cycles?
+const AppContext = _react.default.createContext({
+  gifs: [],
+  updateGifs: () => {}
+});
+
+exports.AppContext = AppContext;
+
 const App = () => {
-  //const [gifs, setGifs] = useState({});
-  return /*#__PURE__*/_react.default.createElement("div", {
+  const [gifs, setGifs] = (0, _react.useState)([]);
+
+  const updateGifs = incomingGifs => {
+    setGifs([...incomingGifs]);
+    console.log(gifs);
+  };
+
+  return /*#__PURE__*/_react.default.createElement(AppContext.Provider, {
+    value: {
+      gifs,
+      updateGifs
+    }
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "page-container"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "page"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "page__content"
-  }, /*#__PURE__*/_react.default.createElement(_SquareComponent.default
-  /*numGif={gifs.numGif}*/
-  , null)), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_SquareComponent.default, null)), /*#__PURE__*/_react.default.createElement("div", {
     className: "page__sidebar"
-  }, /*#__PURE__*/_react.default.createElement(_SearchComponent.default
-  /*gifs={gifs}*/
-  , null))));
+  }, /*#__PURE__*/_react.default.createElement(_SearchComponent.default, null)))));
 };
 
-var _default = App; // hooks
-// one componet that has state and a button that updates a state value and rendering that value
-// context api
-
-exports.default = _default;
+exports.App = App;
 },{"react":"node_modules/react/index.js","./components/SearchComponent.jsx":"components/SearchComponent.jsx","./components/SquareComponent.jsx":"components/SquareComponent.jsx"}],"reactDemo.js":[function(require,module,exports) {
 "use strict";
 
@@ -29995,11 +30017,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _app = _interopRequireDefault(require("./app.jsx"));
+var _app = require("./app.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_app.default, null), document.getElementById('root'));
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_app.App, null), document.getElementById('root'));
 },{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./app.jsx":"app.jsx"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -30035,7 +30057,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52728" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54796" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
