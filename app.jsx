@@ -17,7 +17,7 @@ const App = () => {
   const [gifs, setGifs] = useState([]);
 
   const updateGifs = (incomingGifs) => {
-    setGifs([...incomingGifs]);
+    setGifs(incomingGifs);
     console.log(gifs);
   };
 

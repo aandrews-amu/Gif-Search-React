@@ -15,7 +15,7 @@ const SearchComponent = () => {
   };
 
   const handleSubmit = async (e) => {
-    const gifArray = [];
+    let gifArray = [];
     e.preventDefault();
     const gifs = await getGifs();
     gifs.data.forEach((gif) => {

@@ -29873,7 +29873,7 @@ const SearchComponent = () => {
   };
 
   const handleSubmit = async e => {
-    const gifArray = [];
+    let gifArray = [];
     e.preventDefault();
     const gifs = await getGifs();
     gifs.data.forEach(gif => {
@@ -29989,7 +29989,7 @@ const App = () => {
   const [gifs, setGifs] = (0, _react.useState)([]);
 
   const updateGifs = incomingGifs => {
-    setGifs([...incomingGifs]);
+    setGifs(incomingGifs);
     console.log(gifs);
   };
 
@@ -30027,7 +30027,6 @@ _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_app.App, nu
 
 require("./style.scss");
 
-// require('./boxes.js');
 require('./reactDemo.js');
 },{"./style.scss":"style.scss","./reactDemo.js":"reactDemo.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
