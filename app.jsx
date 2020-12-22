@@ -2,15 +2,9 @@ import React, { useState } from 'react';
 import SearchComponent from './components/SearchComponent.jsx';
 import SquareComponent from './components/SquareComponent.jsx';
 
-// TODO
-// - weird array thing
-// - gifs overflowing
-// - removing by index
-// - import dependency cycles?
-
 const AppContext = React.createContext({
   gifs: [],
-  updateGifs: () => {},
+  updateGifs: () => { },
 });
 
 const App = () => {
@@ -26,10 +20,10 @@ const App = () => {
       <div className="page-container">
         <div className="page">
           <div className="page__content">
-            <SquareComponent/>
+            <SquareComponent />
           </div>
           <div className="page__sidebar">
-            <SearchComponent/>
+            <SearchComponent />
           </div>
         </div>
       </div>
